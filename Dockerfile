@@ -1,8 +1,10 @@
 FROM	alpine:3.24
 
 RUN	apk update \
-	&& apk upgrade -y --no-cache \
-	&& apk add nginx
+	&& apk upgrade --no-cache \
+	&& apk add nginx \
+	&& sed -i 's/return 404/root \/var\/www\/localhost\/htdocs/g' /etc/nginx/http.d/default.conf \
+	&& echo "SERVER OK" > /var/www/localhost/htdocs/index.html
 
 EXPOSE 80
 
